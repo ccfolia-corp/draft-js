@@ -118,7 +118,7 @@ class DraftEditorBlock extends React.Component<Props> {
     if (scrollParent === window) {
       const nodePosition = getElementPosition(blockNode);
       const nodeBottom = nodePosition.y + nodePosition.height;
-      const viewportHeight = getViewportDimensions().height;
+      const viewportHeight = getViewportDimensions().height - 50; // TALTO: Footerの分を差し引いておく
       scrollDelta = nodeBottom - viewportHeight;
       if (scrollDelta > 0) {
         window.scrollTo(
