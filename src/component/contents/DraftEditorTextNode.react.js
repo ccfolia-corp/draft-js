@@ -25,7 +25,7 @@ const useNewlineChar = UserAgent.isBrowser('IE <= 11');
  * Check whether the node should be considered a newline.
  */
 function isNewline(node: Element): boolean {
-  return node.childNodes.length === 1 && node.childNodes[0].nodeName === 'BR';
+  return useNewlineChar ? node.textContent === '\n' : node.node.childNodes.length === 1 && node.childNodes[0].nodeName === 'BR';
 }
 
 /**
@@ -41,12 +41,20 @@ function isNewline(node: Element): boolean {
  */
 // TALTO: 変換確定の再レンダリングを抑止するための措置
 const NEWLINE_A = ref =>
-  (
+  useNewlineChar ? (
+    <span key="A" data-text="true" ref={ref}>
+      {'\n'}
+    </span>
+  ) : (
     <span key="A" data-text="true" ref={ref}><br /></span>
   );
 
 const NEWLINE_B = ref =>
-  (
+  useNewlineChar ? (
+    <span key="B" data-text="true" ref={ref}>
+      {'\n'}
+    </span>
+  ) : (
     <span key="B" data-text="true" ref={ref}><br /></span>
   );
 
