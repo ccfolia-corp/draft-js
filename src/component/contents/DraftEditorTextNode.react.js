@@ -25,7 +25,7 @@ const useNewlineChar = UserAgent.isBrowser('IE <= 11');
  * Check whether the node should be considered a newline.
  */
 function isNewline(node: Element): boolean {
-  return useNewlineChar ? node.textContent === '\n' : node.tagName === 'BR';
+  return useNewlineChar ? node.textContent === '\n' : node.childNodes.length === 1 && node.childNodes[0].nodeName === 'BR';
 }
 
 /**
@@ -39,13 +39,14 @@ function isNewline(node: Element): boolean {
  * See http://jsfiddle.net/9khdavod/ for the failure case, and
  * http://jsfiddle.net/7pg143f7/ for the fixed case.
  */
+// TALTO: 変換確定の再レンダリングを抑止するための措置
 const NEWLINE_A = ref =>
   useNewlineChar ? (
     <span key="A" data-text="true" ref={ref}>
       {'\n'}
     </span>
   ) : (
-    <br key="A" data-text="true" ref={ref} />
+    <span key="A" data-text="true" ref={ref}><br /></span>
   );
 
 const NEWLINE_B = ref =>
@@ -54,7 +55,7 @@ const NEWLINE_B = ref =>
       {'\n'}
     </span>
   ) : (
-    <br key="B" data-text="true" ref={ref} />
+    <span key="B" data-text="true" ref={ref}><br /></span>
   );
 
 type Props = {children: string, ...};

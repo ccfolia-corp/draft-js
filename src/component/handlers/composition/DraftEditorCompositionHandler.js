@@ -232,7 +232,7 @@ const DraftEditorCompositionHandler = {
     );
     const compositionEndSelectionState = documentSelection.selectionState;
 
-    editor.restoreEditorDOM();
+    // editor.restoreEditorDOM(); // TALTO: leafの初めに入力しても描画できるようになったので、全体の再レンダリングは不要になった
 
     // See:
     // - https://github.com/facebook/draft-js/issues/2093
